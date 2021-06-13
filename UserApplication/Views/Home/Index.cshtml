@@ -1,0 +1,50 @@
+﻿@model IEnumerable<UserApplication.Models.Records>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Home Page</h2>
+
+@if (Request.IsAuthenticated)
+{
+
+    <span>Welcome @Html.Encode(User.Identity.Name) </span>
+    <br />
+    @Html.ActionLink("New Record","newRecord",null,new { @class="btn btn-primary"})<br />
+    <table class="table">
+        <tr>
+            <td>Record No</td>
+            <td>Name</td>
+            <td>SurName</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Location</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+            @foreach (var item in Model)
+            {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.SurName</td>
+        <td>@item.Email</td>
+        <td>@item.Phone</td>
+        <td>@item.Location</td>
+        <td>@Html.ActionLink("Edit", "recordEdit", new { Id = item.Id }, new { @class = "btn btn-warning" })</td>
+        <td>@Html.ActionLink("Delete", "recordDelete", new { Id = item.Id }, new { @class = "btn btn-danger" })</td>
+    </tr>
+
+            }
+        </table>
+
+}
+else
+{
+
+    @Html.ActionLink("Login", "Login", "Home")
+    <br />
+
+    @Html.ActionLink("Register", "Register", "Home")
+}
+
